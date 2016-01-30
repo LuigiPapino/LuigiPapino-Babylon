@@ -8,6 +8,7 @@
     <string name="contact_details">Details</string>
     <string name="created_at">Created %s</string>
     <string name="updated_at">Updated %s</string>
-    <string name="retry">Restry</string>
+    <string name="retry">Retry</string>
     <string name="no_connection">No Data connection available</string>
+    <string name="select_contact">Select a contact</string>
 </resources>

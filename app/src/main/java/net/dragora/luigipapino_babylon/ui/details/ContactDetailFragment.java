@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.dragora.luigipapino_babylon.R;
 import net.dragora.luigipapino_babylon.commons.BaseFragment;
@@ -80,8 +81,9 @@ public class ContactDetailFragment extends BaseFragment {
                     .load("http://api.adorable.io/avatars/285/" + contact.getEmail())
                     .fitCenter()
                     .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .fallback(R.drawable.ic_account_box_black_48dp)
-                    .placeholder(R.drawable.ic_account_box_black_48dp)
+                    .placeholder(R.drawable.avatar_placeholder)
                     .into(avatar);
         } else {
             avatar.setVisibility(View.GONE);

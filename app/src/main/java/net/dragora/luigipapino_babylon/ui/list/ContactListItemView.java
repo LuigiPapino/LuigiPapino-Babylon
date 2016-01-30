@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.dragora.luigipapino_babylon.R;
 import net.dragora.luigipapino_babylon.model.Contact;
@@ -28,7 +29,7 @@ public class ContactListItemView extends LinearLayout{
     TextView name;
     @ViewById
     FrameLayout itemLayout;
-
+    private Contact contact;
 
     public ContactListItemView(Context context) {
         super(context);
@@ -46,15 +47,15 @@ public class ContactListItemView extends LinearLayout{
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    private Contact contact;
     public void bind(@NonNull Contact contact){
         this.contact = contact;
         Glide.with(getContext())
                 .load("http://api.adorable.io/avatars/285/" + contact.getEmail())
                 .centerCrop()
                 .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .fallback(R.drawable.ic_account_box_black_48dp)
-                .placeholder(R.drawable.ic_account_box_black_48dp)
+                .placeholder(R.drawable.avatar_placeholder)
                 .into(avatar);
         name.setText(contact.getName());
     }
