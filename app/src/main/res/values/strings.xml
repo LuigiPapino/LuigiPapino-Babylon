@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">LuigiPapino-Babylon</string>
+    <string name="title_person_detail">Person Detail</string>
+    <string name="contacts_list">Contacts</string>
+    <string name="no_contacts">Contact list is empty</string>
+    <string name="error_network">Network error</string>
+    <string name="ok">OK</string>
+    <string name="contact_details">Details</string>
+    <string name="created_at">Created %s</string>
+    <string name="updated_at">Updated %s</string>
+    <string name="retry">Restry</string>
+    <string name="no_connection">No Data connection available</string>
+</resources>
