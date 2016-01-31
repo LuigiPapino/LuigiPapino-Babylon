@@ -3,6 +3,7 @@ package net.dragora.luigipapino_babylon.ui.list;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -65,12 +66,13 @@ public class ContactListActivity extends BaseActivity {
     ContactRecyclerAdapter adapter;
     @Inject
     NetworkApi networkApi;
+    @SystemService
+    ConnectivityManager connectivityManager;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
-
     private SubscriptionList subscriptionList = new SubscriptionList();
 
     public ContactListActivity() {
@@ -103,15 +105,18 @@ public class ContactListActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         subscriptionList.add(
-                networkApi.getEvents().observeOn(AndroidSchedulers.mainThread())
+                networkApi.getEvents()
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(this::setNetworkEvent)
         );
         subscriptionList.add(
-                networkApi.getErrors().observeOn(AndroidSchedulers.mainThread())
+                networkApi.getErrors()
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(this::showError)
         );
         subscriptionList.add(
-                networkApi.getContacts().observeOn(AndroidSchedulers.mainThread())
+                networkApi.getContacts()
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(adapter::setItems)
         );
 
@@ -155,9 +160,6 @@ public class ContactListActivity extends BaseActivity {
                 .show();
     }
 
-    @SystemService
-    ConnectivityManager connectivityManager;
-
     private void startFetch() {
         Log.d(TAG, "startFetch() called with: " + "");
 
@@ -190,72 +192,10 @@ public class ContactListActivity extends BaseActivity {
         }
     }
 
-   /* public class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+    @VisibleForTesting
+    public NetworkApi getNetworkApi() {
+        return networkApi;
+    }
 
-        private final List<DummyContent.DummyItem> mValues;
 
-        public SimpleItemRecyclerViewAdapter(List<DummyContent.DummyItem> items) {
-            mValues = items;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.contact_list_item_view, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
-
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mTwoPane) {
-                        Bundle arguments = new Bundle();
-                        arguments.putString(ContactDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-                        ContactDetailFragment fragment = new ContactDetailFragment();
-                        fragment.setArguments(arguments);
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.person_detail_container, fragment)
-                                .commit();
-                    } else {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, ContactDetailActivity.class);
-                        intent.putExtra(ContactDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-
-                        context.startActivity(intent);
-                    }
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return mValues.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View mView;
-            public final TextView mIdView;
-            public final TextView mContentView;
-            public DummyContent.DummyItem mItem;
-
-            public ViewHolder(View view) {
-                super(view);
-                mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
-            }
-
-            @Override
-            public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
-            }
-        }
-    }*/
 }

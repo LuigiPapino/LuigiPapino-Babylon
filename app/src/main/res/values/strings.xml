@@ -2,7 +2,7 @@
     <string name="app_name">LuigiPapino-Babylon</string>
     <string name="title_person_detail">Person Detail</string>
     <string name="contacts_list">Contacts</string>
-    <string name="no_contacts">Contact list is empty</string>
+    <string name="empty_contacts">Contact list is empty</string>
     <string name="error_network">Network error</string>
     <string name="ok">OK</string>
     <string name="contact_details">Details</string>

@@ -30,6 +30,8 @@ public class Contact implements Parcelable{
     private static final String FIELD_ADDRESS = "address";
     private static final String FIELD_EMAIL = "email";
     private static final String FIELD_UPDATED_AT = "updatedAt";
+    private static SimpleDateFormat inputFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.UK); //TODO verify the format is correct and in UK locale
+    private static SimpleDateFormat outputFormatter = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault());
     @SerializedName(FIELD_ID)
     private int mId;
     @SerializedName(FIELD_FIRST_NAME)
@@ -167,7 +169,7 @@ public class Contact implements Parcelable{
         return "id = " + mId + ", firstName = " + mFirstName + ", surname = " + mSurname + ", phoneNumber = " + mPhoneNumber + ", createdAt = " + mCreatedAt + ", address = " + mAddress + ", email = " + mEmail + ", updatedAt = " + mUpdatedAt;
     }
 
-    public CharSequence getName() {
+    public String getName() {
         return String.format("%s %s", getFirstName(), getSurname());
     }
 
@@ -211,7 +213,4 @@ public class Contact implements Parcelable{
         }
         return result != null ? result : "";
     }
-
-    private static SimpleDateFormat inputFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    private static SimpleDateFormat outputFormatter = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault());
 }

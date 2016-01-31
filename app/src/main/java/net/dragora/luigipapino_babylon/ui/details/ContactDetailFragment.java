@@ -23,9 +23,6 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * A fragment representing a single Contact detail screen.
  * This fragment is either contained in a {@link ContactListActivity}
@@ -34,17 +31,15 @@ import java.util.Date;
  */
 @EFragment(R.layout.contact_detail_fragment)
 public class ContactDetailFragment extends BaseFragment {
-
-    @ViewById
-    Toolbar detailToolbar;
-
     @FragmentArg
     Contact contact;
 
     @ViewById
-    ImageView avatar;
+    Toolbar detailToolbar;
     @ViewById
-    TextView name;
+    ImageView avatarBig;
+    @ViewById
+    TextView nameBig;
     @ViewById
     ImageView phoneAction;
     @ViewById
@@ -71,7 +66,7 @@ public class ContactDetailFragment extends BaseFragment {
         if (contact == null)
             return;
 
-        name.setText(contact.getName());
+        nameBig.setText(contact.getName());
         phoneLabel.setText(contact.getPhoneNumber());
         addressLabel.setText(contact.getAddress());
         emailLabel.setText(contact.getEmail());
@@ -84,9 +79,9 @@ public class ContactDetailFragment extends BaseFragment {
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .fallback(R.drawable.ic_account_box_black_48dp)
                     .placeholder(R.drawable.avatar_placeholder)
-                    .into(avatar);
+                    .into(avatarBig);
         } else {
-            avatar.setVisibility(View.GONE);
+            avatarBig.setVisibility(View.GONE);
         }
         createdLabel.setText(getString(R.string.created_at, contact.getCreatedFormatted()));
         updatedLabel.setText(getString(R.string.updated_at, contact.getUpdatedFormatted()));

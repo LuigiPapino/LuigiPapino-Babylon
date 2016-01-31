@@ -17,26 +17,15 @@ import rx.subjects.PublishSubject;
 
 public class NetworkApi {
 
-    private static final String TAG = NetworkApi.class.getSimpleName();
-
-    public enum Events {
-        FETCHING, IDLE, ERROR
-
-    }
-
     public static final String BASE_HOST = "http://fast-gorge.herokuapp.com/";
-
+    private static final String TAG = NetworkApi.class.getSimpleName();
     public APIService apiService;
-
     @VisibleForTesting
     public RestAdapter restAdapter;
-
+    public PublishSubject<Throwable> errorSubject = PublishSubject.create();
+    public PublishSubject<Events> eventsSubject = PublishSubject.create();
     private ContactsStore contactsStore;
-    private PublishSubject<Throwable> errorSubject = PublishSubject.create();
-    private PublishSubject<Events> eventsSubject = PublishSubject.create();
-
     public NetworkApi(ContactsStore contactsStore) {
-
         this.contactsStore = contactsStore;
         restAdapter = new RestAdapter.Builder()
                 .setEndpoint(BASE_HOST)
@@ -52,16 +41,13 @@ public class NetworkApi {
      */
     public Observable<List<Contact>> fetchAndStoreContacts() {
         eventsSubject.onNext(Events.FETCHING);
-
-        apiService.getContacts().subscribe(this::setContacts,
-                this::setError
-        );
+        apiService.getContacts()
+                .subscribe(this::setContacts, this::setError);
         return contactsStore.getContacts();
     }
 
-    public Observable<List<Contact>> getContacts(){
+    public Observable<List<Contact>> getContacts() {
         return contactsStore.getContacts();
-
     }
 
     private void setContacts(List<Contact> contacts) {
@@ -81,15 +67,19 @@ public class NetworkApi {
      * @return observable that emits errors raised
      */
     public Observable<Throwable> getErrors() {
-
         return errorSubject.asObservable();
     }
 
     /**
-     *  Return the events for network calls
+     * Return the events for network calls
+     *
      * @return observable that emits events
      */
     public Observable<Events> getEvents() {
         return eventsSubject.asObservable();
+    }
+
+    public enum Events {
+        FETCHING, IDLE, ERROR
     }
 }

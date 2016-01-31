@@ -14,30 +14,20 @@ import java.util.List;
  */
 public abstract class UltimateRecyclerViewAdapterBase<T, V extends View> extends UltimateViewAdapter<ViewWrapper<V>> {
 
-    public void setItems(List<T> items) {
-        this.items = items;
-        notifyDataSetChanged();
-    }
-
     public List<T> items = new ArrayList<T>();
-
 
     public boolean isEmpty() {
         return items != null && items.size() == 0;
     }
 
-
-
-
     protected abstract V onCreateItemView(ViewGroup parent, int viewType);
-
-    // additional methods to manipulate the items
-
 
     @Override
     public long generateHeaderId(int i) {
         return 0;
     }
+
+    // additional methods to manipulate the items
 
     @Override
     public ViewWrapper<V> getViewHolder(View view) {
@@ -57,8 +47,6 @@ public abstract class UltimateRecyclerViewAdapterBase<T, V extends View> extends
     @Override
     public abstract void onBindViewHolder(ViewWrapper<V> holder, int position);
 
-
-
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup viewGroup) {
         return null;
@@ -67,5 +55,14 @@ public abstract class UltimateRecyclerViewAdapterBase<T, V extends View> extends
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
 
+    }
+
+    public List<T> getItems() {
+        return items;
+    }
+
+    public void setItems(List<T> items) {
+        this.items = items;
+        notifyDataSetChanged();
     }
 }

@@ -28,7 +28,5 @@ public interface ContactsStore {
      */
     void setContacts(@Nullable List<Contact> contacts);
 
-    @Nullable
-    Contact get(int id);
 
 }

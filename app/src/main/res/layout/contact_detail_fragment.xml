@@ -13,17 +13,17 @@
 
 
         <ImageView
-            android:id="@+id/avatar"
+            android:id="@+id/avatar_big"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:scaleType="fitXY" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/name_big"
             style="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/avatar"
+            android:layout_below="@id/avatar_big"
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:padding="8dp"
@@ -35,7 +35,7 @@
             android:id="@+id/phoneLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/name"
+            android:layout_below="@id/name_big"
             android:layout_marginLeft="16dp"
             android:gravity="center_vertical">
 

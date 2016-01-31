@@ -53,8 +53,9 @@ public class ContactsStoreFromProvider implements ContactsStore {
         return behaviorSubject.asObservable();
     }
 
+
     @Override
-    public void setContacts(@Nullable List<Contact> contacts) {
+    public synchronized void setContacts(@Nullable List<Contact> contacts) {
         getContentResolver()
                 .delete(ContactsProvider.Contacts.CONTACTS, null, null);
         if (contacts == null)
@@ -76,11 +77,6 @@ public class ContactsStoreFromProvider implements ContactsStore {
         return context.getContentResolver();
     }
 
-    @Override
-    @Nullable
-    public Contact get(int id) {
-        return null;
-    }
 
     @NonNull
     protected ContentObserver getContentObserver() {

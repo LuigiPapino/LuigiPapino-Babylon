@@ -42,7 +42,9 @@ public class ContactDetailActivity extends BaseActivity {
     AppBarLayout appBar;
     @ViewById
     FrameLayout contactDetailContainer;
-
+    @Extra
+    Contact contact;
+    private boolean shouldAddFragment = false;
 
     @AfterViews
     protected void setup() {
@@ -52,7 +54,6 @@ public class ContactDetailActivity extends BaseActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.contact_details);
-
         }
         if (shouldAddFragment) {
             getSupportFragmentManager().beginTransaction()
@@ -62,16 +63,9 @@ public class ContactDetailActivity extends BaseActivity {
         }
     }
 
-    @Extra
-    Contact contact;
-
-    private boolean shouldAddFragment = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
         // (e.g. when rotating the screen from portrait to landscape).

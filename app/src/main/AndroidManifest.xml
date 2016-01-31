@@ -2,14 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.dragora.luigipapino_babylon">
 
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true" android:name=".MyApplication"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.list.ContactListActivity_"
@@ -32,8 +34,8 @@
         </activity>
 
         <provider
-            android:authorities="net.dragora.luigipapino_babylon.provider.ContactsProvider"
             android:name="net.dragora.luigipapino_babylon.data.schematic_providers.generated.ContactsProvider"
+            android:authorities="net.dragora.luigipapino_babylon.provider.ContactsProvider"
             android:exported="false"/>
     </application>
 
